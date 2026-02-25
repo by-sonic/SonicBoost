@@ -1,3 +1,4 @@
+using SonicBoost.Core.Logging;
 using SonicBoost.ViewModels;
 using SonicBoost.Views;
 using System.Diagnostics;
@@ -18,6 +19,7 @@ public partial class MainWindow : FluentWindow
 
     private void MainWindow_Loaded(object sender, RoutedEventArgs e)
     {
+        AdminWarning.Visibility = App.IsAdmin ? Visibility.Collapsed : Visibility.Visible;
         NavList.SelectedIndex = 0;
     }
 
@@ -47,5 +49,25 @@ public partial class MainWindow : FluentWindow
     private void SonicVpnCard_Click(object sender, MouseButtonEventArgs e)
     {
         Process.Start(new ProcessStartInfo("https://t.me/bysonicvpn_bot") { UseShellExecute = true });
+    }
+
+    private void OpenLogFile_Click(object sender, RoutedEventArgs e)
+    {
+        var log = App.GetService<LogService>();
+        try
+        {
+            Process.Start(new ProcessStartInfo(log.LogFilePath) { UseShellExecute = true });
+        }
+        catch
+        {
+            Process.Start(new ProcessStartInfo("explorer.exe", $"/select,\"{log.LogFilePath}\"") { UseShellExecute = true });
+        }
+    }
+
+    private void OpenLogFolder_Click(object sender, RoutedEventArgs e)
+    {
+        var log = App.GetService<LogService>();
+        var folder = System.IO.Path.GetDirectoryName(log.LogFilePath)!;
+        Process.Start(new ProcessStartInfo("explorer.exe", folder) { UseShellExecute = true });
     }
 }

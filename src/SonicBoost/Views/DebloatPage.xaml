@@ -26,9 +26,10 @@
         </DockPanel>
 
         <Border Grid.Row="1" CornerRadius="8" Padding="14,10" Margin="0,0,0,14"
-                Background="#1A1E90FF"
+                Background="{Binding IsError, Converter={StaticResource ErrorToStatusBackgroundConverter}}"
                 Visibility="{Binding StatusMessage, Converter={StaticResource StringToVisibilityConverter}}">
-            <TextBlock Text="{Binding StatusMessage}" FontSize="13" Foreground="#80CAFF" />
+            <TextBlock Text="{Binding StatusMessage}" FontSize="13"
+                       Foreground="{Binding IsError, Converter={StaticResource ErrorToStatusForegroundConverter}}" />
         </Border>
 
         <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">

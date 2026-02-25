@@ -126,3 +126,31 @@ public class InverseBoolToStatusBrushConverter : IValueConverter
     }
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotSupportedException();
 }
+
+/// <summary>
+/// Returns red-ish background if IsError=true, blue if false.
+/// </summary>
+public class ErrorToStatusBackgroundConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return value is true
+            ? new SolidColorBrush(Color.FromArgb(0x33, 0xFF, 0x44, 0x44))
+            : new SolidColorBrush(Color.FromArgb(0x1A, 0x1E, 0x90, 0xFF));
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotSupportedException();
+}
+
+/// <summary>
+/// Returns red-ish text if IsError=true, light blue if false.
+/// </summary>
+public class ErrorToStatusForegroundConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return value is true
+            ? new SolidColorBrush(Color.FromRgb(0xFF, 0x6B, 0x6B))
+            : new SolidColorBrush(Color.FromRgb(0x80, 0xCA, 0xFF));
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotSupportedException();
+}

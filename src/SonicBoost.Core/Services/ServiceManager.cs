@@ -1,4 +1,5 @@
 using SonicBoost.Core.Backup;
+using SonicBoost.Core.Tweaks;
 using SonicBoost.Core.Tweaks.Models;
 using System.Diagnostics;
 using System.Runtime.Versioning;
@@ -43,31 +44,54 @@ public class ServiceManager
 
     public void DisableService(ServiceItem item)
     {
+        if (!TweakEngine.IsAdmin())
+            throw new UnauthorizedAccessException("Требуются права администратора для управления службами");
+
         _backup.BackupServiceState(item.ServiceName, item.StartupType);
-        RunSc($"config \"{item.ServiceName}\" start= disabled");
+        var (exitCode, output) = RunScWithOutput($"config \"{item.ServiceName}\" start= disabled");
+        if (exitCode != 0)
+            throw new InvalidOperationException($"sc.exe вернул код {exitCode}: {output}");
+
         StopService(item.ServiceName);
+
+        using var svc = new ServiceController(item.ServiceName);
+        svc.Refresh();
+        if (svc.StartType != ServiceStartMode.Disabled)
+            throw new InvalidOperationException($"Служба {item.DisplayName} не была отключена — проверьте политику безопасности");
     }
 
     public void EnableService(ServiceItem item, string startMode = "demand")
     {
-        RunSc($"config \"{item.ServiceName}\" start= {startMode}");
+        if (!TweakEngine.IsAdmin())
+            throw new UnauthorizedAccessException("Требуются права администратора для управления службами");
+
+        var (exitCode, output) = RunScWithOutput($"config \"{item.ServiceName}\" start= {startMode}");
+        if (exitCode != 0)
+            throw new InvalidOperationException($"sc.exe вернул код {exitCode}: {output}");
     }
 
     public void StopService(string name)
     {
-        RunSc($"stop \"{name}\"");
+        RunScWithOutput($"stop \"{name}\"");
     }
 
-    private static void RunSc(string args)
+    private static (int exitCode, string output) RunScWithOutput(string args)
     {
-        using var process = Process.Start(new ProcessStartInfo
+        using var process = new Process();
+        process.StartInfo = new ProcessStartInfo
         {
             FileName = "sc.exe",
             Arguments = args,
             UseShellExecute = false,
-            CreateNoWindow = true
-        });
-        process?.WaitForExit(5000);
+            CreateNoWindow = true,
+            RedirectStandardOutput = true,
+            RedirectStandardError = true
+        };
+        process.Start();
+        var stdout = process.StandardOutput.ReadToEnd();
+        var stderr = process.StandardError.ReadToEnd();
+        process.WaitForExit(5000);
+        return (process.ExitCode, string.IsNullOrEmpty(stdout) ? stderr : stdout);
     }
 
     private static List<ServiceItem> GetServiceDefinitions() =>

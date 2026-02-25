@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using SonicBoost.Core.Logging;
 using SonicBoost.Core.Network;
 using SonicBoost.Core.Tweaks.Models;
 using System.Collections.ObjectModel;
@@ -9,10 +10,12 @@ namespace SonicBoost.ViewModels;
 public partial class NetworkViewModel : ObservableObject
 {
     private readonly NetworkOptimizer _net;
+    private readonly LogService _log;
 
     [ObservableProperty] private bool _isLoading;
     [ObservableProperty] private string _selectedDns = "Cloudflare";
     [ObservableProperty] private string _statusMessage = "";
+    [ObservableProperty] private bool _isError;
 
     public ObservableCollection<TweakItem> Tweaks { get; } = [];
 
@@ -24,15 +27,17 @@ public partial class NetworkViewModel : ObservableObject
         new("OpenDNS", "208.67.222.222", "208.67.220.220"),
     ];
 
-    public NetworkViewModel(NetworkOptimizer net)
+    public NetworkViewModel(NetworkOptimizer net, LogService log)
     {
         _net = net;
+        _log = log;
     }
 
     [RelayCommand]
     private async Task LoadTweaksAsync()
     {
         IsLoading = true;
+        IsError = false;
         StatusMessage = "Сканирование сетевых настроек...";
         Tweaks.Clear();
 
@@ -48,6 +53,7 @@ public partial class NetworkViewModel : ObservableObject
 
         var applied = Tweaks.Count(t => t.IsEnabled);
         StatusMessage = $"Сетевых твиков: {Tweaks.Count}, применено: {applied}";
+        _log.Info(StatusMessage);
         IsLoading = false;
     }
 
@@ -55,33 +61,74 @@ public partial class NetworkViewModel : ObservableObject
     private async Task ToggleTweakAsync(TweakItem tweak)
     {
         tweak.IsApplying = true;
+        IsError = false;
+        var wasEnabled = tweak.IsEnabled;
+
         try
         {
             await Task.Run(() =>
             {
-                if (tweak.IsEnabled) _net.RevertTweak(tweak);
-                else _net.ApplyTweak(tweak);
-                tweak.IsEnabled = !tweak.IsEnabled;
+                if (tweak.IsEnabled)
+                    _net.RevertTweak(tweak);
+                else
+                    _net.ApplyTweak(tweak);
             });
-            StatusMessage = tweak.IsEnabled
-                ? $"Применено: {tweak.Name}"
-                : $"Отменено: {tweak.Name}";
+
+            var verified = _net.IsTweakApplied(tweak);
+            tweak.IsEnabled = verified;
+
+            if (wasEnabled && !verified)
+            {
+                StatusMessage = $"✓ Отменено: {tweak.Name}";
+                _log.Info($"Отменено: {tweak.Name}");
+            }
+            else if (!wasEnabled && verified)
+            {
+                StatusMessage = $"✓ Применено и проверено: {tweak.Name}";
+                _log.Info($"Применено и проверено: {tweak.Name}");
+            }
+            else
+            {
+                IsError = true;
+                StatusMessage = $"⚠ {tweak.Name} — значение не изменилось после записи";
+                _log.Warn($"{tweak.Name} — значение не изменилось. Путь: {tweak.RegistryPath}\\{tweak.RegistryKey}");
+            }
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            IsError = true;
+            StatusMessage = $"⛔ Нет прав: {tweak.Name} — запустите от имени администратора";
+            _log.Error($"Нет прав: {tweak.Name}", ex);
         }
         catch (Exception ex)
         {
-            StatusMessage = $"Ошибка: {tweak.Name} — {ex.Message}";
+            IsError = true;
+            StatusMessage = $"❌ Ошибка: {tweak.Name} — {ex.Message}";
+            _log.Error($"Ошибка при изменении: {tweak.Name}", ex);
         }
+
         tweak.IsApplying = false;
     }
 
     [RelayCommand]
     private async Task ApplyDnsAsync()
     {
+        IsError = false;
         var preset = DnsPresets.FirstOrDefault(p => p.Name == SelectedDns);
         if (preset == null) return;
 
-        await Task.Run(() => _net.SetDns(preset.Primary, preset.Secondary));
-        StatusMessage = $"DNS установлен: {preset.Name} ({preset.Primary})";
+        var (success, output) = await Task.Run(() => _net.SetDns(preset.Primary, preset.Secondary));
+        if (success)
+        {
+            StatusMessage = $"✓ DNS установлен: {preset.Name} ({preset.Primary})";
+            _log.Info($"DNS установлен: {preset.Name} — {output}");
+        }
+        else
+        {
+            IsError = true;
+            StatusMessage = $"❌ Ошибка DNS: {output}";
+            _log.Error($"Ошибка DNS: {output}");
+        }
     }
 }
 

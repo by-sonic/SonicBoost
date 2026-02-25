@@ -35,6 +35,46 @@
                         Margin="0,4,0,0" />
                 </StackPanel>
 
+                <!-- Admin Warning -->
+                <Border
+                    x:Name="AdminWarning"
+                    DockPanel.Dock="Bottom"
+                    CornerRadius="8"
+                    Padding="10,8"
+                    Margin="14,4,14,0"
+                    Background="#33FF4444"
+                    Visibility="Collapsed">
+                    <TextBlock
+                        Text="⚠ Нет прав администратора. Твики не будут работать!"
+                        Foreground="#FF6B6B"
+                        FontSize="11"
+                        TextWrapping="Wrap"
+                        TextAlignment="Center" />
+                </Border>
+
+                <!-- Log Button -->
+                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="14,6,14,4" HorizontalAlignment="Center">
+                    <Button
+                        Content="Открыть лог"
+                        Click="OpenLogFile_Click"
+                        FontSize="11"
+                        Padding="10,4"
+                        Background="#18FFFFFF"
+                        Foreground="#9EA7B8"
+                        BorderThickness="0"
+                        Cursor="Hand" />
+                    <Button
+                        Content="Папка логов"
+                        Click="OpenLogFolder_Click"
+                        FontSize="11"
+                        Padding="10,4"
+                        Margin="6,0,0,0"
+                        Background="#18FFFFFF"
+                        Foreground="#9EA7B8"
+                        BorderThickness="0"
+                        Cursor="Hand" />
+                </StackPanel>
+
                 <!-- SonicVPN Card at bottom -->
                 <Border
                     DockPanel.Dock="Bottom"

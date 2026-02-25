@@ -1,5 +1,6 @@
 using Microsoft.Win32;
 using SonicBoost.Core.Backup;
+using SonicBoost.Core.Tweaks;
 using SonicBoost.Core.Tweaks.Models;
 using System.Runtime.Versioning;
 
@@ -138,21 +139,32 @@ public class PrivacyService
 
     public void ApplyTweak(TweakItem tweak)
     {
-        if (string.IsNullOrEmpty(tweak.RegistryPath)) return;
+        if (string.IsNullOrEmpty(tweak.RegistryPath))
+            throw new InvalidOperationException("Не задан путь реестра");
+
+        if (tweak.RegistryPath.StartsWith("HKLM") && !Tweaks.TweakEngine.IsAdmin())
+            throw new UnauthorizedAccessException("Требуются права администратора для записи в HKLM");
+
         _backup.BackupRegistryValue(tweak.RegistryPath, tweak.RegistryKey!);
 
         var (root, subPath) = ParsePath(tweak.RegistryPath);
-        using var key = root.CreateSubKey(subPath, true);
-        key?.SetValue(tweak.RegistryKey!, tweak.EnabledValue!, tweak.ValueKind);
+        using var key = root.CreateSubKey(subPath, true)
+            ?? throw new UnauthorizedAccessException($"Не удалось открыть ключ: {tweak.RegistryPath}");
+        key.SetValue(tweak.RegistryKey!, tweak.EnabledValue!, tweak.ValueKind);
+
+        if (!IsTweakApplied(tweak))
+            throw new InvalidOperationException("Значение не записалось — проверьте права или политику безопасности");
     }
 
     public void RevertTweak(TweakItem tweak)
     {
-        if (string.IsNullOrEmpty(tweak.RegistryPath) || tweak.DisabledValue == null) return;
+        if (string.IsNullOrEmpty(tweak.RegistryPath) || tweak.DisabledValue == null)
+            throw new InvalidOperationException("Не задан путь реестра или значение по умолчанию");
 
         var (root, subPath) = ParsePath(tweak.RegistryPath);
-        using var key = root.CreateSubKey(subPath, true);
-        key?.SetValue(tweak.RegistryKey!, tweak.DisabledValue, tweak.ValueKind);
+        using var key = root.CreateSubKey(subPath, true)
+            ?? throw new UnauthorizedAccessException($"Не удалось открыть ключ: {tweak.RegistryPath}");
+        key.SetValue(tweak.RegistryKey!, tweak.DisabledValue, tweak.ValueKind);
     }
 
     public bool IsTweakApplied(TweakItem tweak)

@@ -24,6 +24,8 @@
             <helpers:BoolToStatusBrushConverter x:Key="BoolToStatusBrushConverter" />
             <helpers:InverseBoolToStatusTextConverter x:Key="InverseBoolToStatusTextConverter" />
             <helpers:InverseBoolToStatusBrushConverter x:Key="InverseBoolToStatusBrushConverter" />
+            <helpers:ErrorToStatusBackgroundConverter x:Key="ErrorToStatusBackgroundConverter" />
+            <helpers:ErrorToStatusForegroundConverter x:Key="ErrorToStatusForegroundConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

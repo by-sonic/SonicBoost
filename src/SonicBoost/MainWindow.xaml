@@ -1,0 +1,123 @@
+<ui:FluentWindow
+    x:Class="SonicBoost.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:views="clr-namespace:SonicBoost.Views"
+    Title="SonicBoost"
+    Width="1100"
+    Height="720"
+    MinWidth="900"
+    MinHeight="600"
+    ExtendsContentIntoTitleBar="True"
+    WindowBackdropType="Mica"
+    WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar Navigation -->
+        <ui:NavigationView
+            x:Name="RootNavigation"
+            Grid.Column="0"
+            PaneDisplayMode="Left"
+            IsBackButtonVisible="Collapsed"
+            OpenPaneLength="220"
+            SelectionChanged="RootNavigation_SelectionChanged">
+
+            <ui:NavigationView.Header>
+                <StackPanel Margin="16,8,16,0">
+                    <TextBlock
+                        Text="SonicBoost"
+                        FontSize="22"
+                        FontWeight="Bold"
+                        Foreground="{StaticResource SonicAccentBrush}" />
+                    <TextBlock
+                        Text="Windows Gaming Optimizer"
+                        FontSize="11"
+                        Opacity="0.6"
+                        Margin="0,2,0,0" />
+                </StackPanel>
+            </ui:NavigationView.Header>
+
+            <ui:NavigationView.MenuItems>
+                <ui:NavigationViewItem Content="Dashboard" TargetPageType="{x:Type views:DashboardPage}">
+                    <ui:NavigationViewItem.Icon>
+                        <ui:SymbolIcon Symbol="Home24" />
+                    </ui:NavigationViewItem.Icon>
+                </ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Gaming Tweaks" TargetPageType="{x:Type views:TweaksPage}">
+                    <ui:NavigationViewItem.Icon>
+                        <ui:SymbolIcon Symbol="TopSpeed24" />
+                    </ui:NavigationViewItem.Icon>
+                </ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Services" TargetPageType="{x:Type views:ServicesPage}">
+                    <ui:NavigationViewItem.Icon>
+                        <ui:SymbolIcon Symbol="Settings24" />
+                    </ui:NavigationViewItem.Icon>
+                </ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Privacy" TargetPageType="{x:Type views:PrivacyPage}">
+                    <ui:NavigationViewItem.Icon>
+                        <ui:SymbolIcon Symbol="Shield24" />
+                    </ui:NavigationViewItem.Icon>
+                </ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Debloat" TargetPageType="{x:Type views:DebloatPage}">
+                    <ui:NavigationViewItem.Icon>
+                        <ui:SymbolIcon Symbol="Delete24" />
+                    </ui:NavigationViewItem.Icon>
+                </ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Network" TargetPageType="{x:Type views:NetworkPage}">
+                    <ui:NavigationViewItem.Icon>
+                        <ui:SymbolIcon Symbol="Wifi124" />
+                    </ui:NavigationViewItem.Icon>
+                </ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Drivers" TargetPageType="{x:Type views:DriversPage}">
+                    <ui:NavigationViewItem.Icon>
+                        <ui:SymbolIcon Symbol="DesktopMac24" />
+                    </ui:NavigationViewItem.Icon>
+                </ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Power Plan" TargetPageType="{x:Type views:PowerPage}">
+                    <ui:NavigationViewItem.Icon>
+                        <ui:SymbolIcon Symbol="Flash24" />
+                    </ui:NavigationViewItem.Icon>
+                </ui:NavigationViewItem>
+            </ui:NavigationView.MenuItems>
+
+            <ui:NavigationView.FooterMenuItems>
+                <ui:NavigationViewItem>
+                    <ui:NavigationViewItem.Content>
+                        <Border
+                            Background="#1A00D4AA"
+                            CornerRadius="8"
+                            Padding="12,10"
+                            Cursor="Hand"
+                            MouseLeftButtonUp="SonicVpnCard_Click">
+                            <StackPanel>
+                                <TextBlock
+                                    Text="SonicVPN"
+                                    FontWeight="SemiBold"
+                                    FontSize="13"
+                                    Foreground="{StaticResource SonicVpnBrush}" />
+                                <TextBlock
+                                    Text="Protect your connection"
+                                    FontSize="10"
+                                    Opacity="0.7"
+                                    Margin="0,2,0,0" />
+                            </StackPanel>
+                        </Border>
+                    </ui:NavigationViewItem.Content>
+                </ui:NavigationViewItem>
+            </ui:NavigationView.FooterMenuItems>
+
+        </ui:NavigationView>
+
+        <!-- Content Area -->
+        <Border Grid.Column="1">
+            <ui:TitleBar Grid.Column="1" Title="" ShowMaximize="True" ShowMinimize="True" />
+        </Border>
+
+    </Grid>
+</ui:FluentWindow>

@@ -1,0 +1,51 @@
+<Page
+    x:Class="SonicBoost.Views.DriversPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="Drivers"
+    Loaded="Page_Loaded">
+
+    <Grid Margin="32,24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Margin="0,0,0,16">
+            <TextBlock Text="Driver Manager" FontSize="22" FontWeight="Bold" />
+            <TextBlock Text="Detect your hardware and download the latest drivers" FontSize="13" Opacity="0.6" Margin="0,4,0,0" />
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding Recommendations}" MaxWidth="900">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <ui:CardControl Margin="0,0,0,8">
+                            <ui:CardControl.Header>
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border Padding="6,2" CornerRadius="4" Background="#331E90FF" Margin="0,0,8,0">
+                                            <TextBlock Text="{Binding Category}" FontSize="10" FontWeight="SemiBold" Foreground="#1E90FF" />
+                                        </Border>
+                                        <TextBlock Text="{Binding Vendor}" FontSize="12" FontWeight="SemiBold" Opacity="0.8" />
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding DeviceName}" FontSize="13" FontWeight="SemiBold" Margin="0,4,0,0" />
+                                    <TextBlock Text="{Binding Description}" FontSize="11" Opacity="0.6" Margin="0,2,0,0" />
+                                    <TextBlock Text="{Binding CurrentVersion, StringFormat='Current: {0}'}" FontSize="10" Opacity="0.4" Margin="0,2,0,0"
+                                               Visibility="{Binding CurrentVersion, Converter={StaticResource StringToVisibilityConverter}}" />
+                                </StackPanel>
+                            </ui:CardControl.Header>
+                            <ui:Button
+                                Content="Download"
+                                Appearance="Primary"
+                                VerticalAlignment="Center"
+                                Command="{Binding DataContext.OpenDownloadUrlCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                CommandParameter="{Binding DownloadUrl}" />
+                        </ui:CardControl>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</Page>

@@ -1,0 +1,23 @@
+<Application
+    x:Class="SonicBoost.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:helpers="clr-namespace:SonicBoost.Helpers">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ui:ThemesDictionary Theme="Dark" />
+                <ui:ControlsDictionary />
+            </ResourceDictionary.MergedDictionaries>
+
+            <SolidColorBrush x:Key="SonicAccentBrush" Color="#1E90FF" />
+            <SolidColorBrush x:Key="SonicVpnBrush" Color="#00D4AA" />
+
+            <helpers:RiskToBrushConverter x:Key="RiskToBrushConverter" />
+            <helpers:RiskToVisibilityConverter x:Key="RiskToVisibilityConverter" />
+            <helpers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <helpers:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -15,7 +15,7 @@
 
         <DockPanel Margin="0,0,0,20">
             <StackPanel>
-                <TextBlock Text="Конфиденциальность и телеметрия" FontSize="22" FontWeight="Bold" />
+                <TextBlock Text="Конфиденциальность и телеметрия" FontSize="22" FontWeight="Bold" Foreground="#E8ECF2" />
                 <TextBlock Text="Контроль над данными и отключение отслеживания" FontSize="13" Foreground="#9EA7B8" Margin="0,6,0,0" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -42,9 +42,9 @@
                                 <ui:CardControl.Header>
                                     <StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Name}" FontSize="14" FontWeight="SemiBold" />
+                                            <TextBlock Text="{Binding Name}" FontSize="14" FontWeight="SemiBold" Foreground="#E8ECF2" />
                                             <Border Margin="10,0,0,0" Padding="8,4" CornerRadius="6" Background="#33448AFF">
-                                                <TextBlock Text="{Binding Category}" FontSize="11" />
+                                                <TextBlock Text="{Binding Category}" FontSize="11" Foreground="#E8ECF2" />
                                             </Border>
                                         </StackPanel>
                                         <TextBlock Text="{Binding Description}" FontSize="12" Foreground="#9EA7B8" TextWrapping="Wrap" Margin="0,6,0,0" />

@@ -1,5 +1,7 @@
 using System.Diagnostics;
+using System.Globalization;
 using System.Runtime.Versioning;
+using System.Text;
 
 namespace SonicBoost.Core.Power;
 
@@ -7,6 +9,11 @@ namespace SonicBoost.Core.Power;
 public class PowerPlanService
 {
     private static readonly string UltimatePerformanceGuid = "e9a42b02-d5df-448d-aa00-03f14749eb61";
+
+    static PowerPlanService()
+    {
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+    }
 
     public PowerPlanInfo GetCurrentPlan()
     {
@@ -63,6 +70,19 @@ public class PowerPlanService
         RunPowercfg("/hibernate on");
     }
 
+    private static Encoding GetOemEncoding()
+    {
+        try
+        {
+            var oemCp = CultureInfo.CurrentCulture.TextInfo.OEMCodePage;
+            return Encoding.GetEncoding(oemCp);
+        }
+        catch
+        {
+            return Encoding.GetEncoding(866);
+        }
+    }
+
     private static string RunPowercfg(string args)
     {
         var psi = new ProcessStartInfo
@@ -71,6 +91,7 @@ public class PowerPlanService
             Arguments = args,
             UseShellExecute = false,
             RedirectStandardOutput = true,
+            StandardOutputEncoding = GetOemEncoding(),
             CreateNoWindow = true
         };
 

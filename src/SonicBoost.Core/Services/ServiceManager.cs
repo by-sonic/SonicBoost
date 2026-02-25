@@ -2,8 +2,10 @@ using SonicBoost.Core.Backup;
 using SonicBoost.Core.Tweaks;
 using SonicBoost.Core.Tweaks.Models;
 using System.Diagnostics;
+using System.Globalization;
 using System.Runtime.Versioning;
 using System.ServiceProcess;
+using System.Text;
 
 namespace SonicBoost.Core.Services;
 
@@ -75,8 +77,19 @@ public class ServiceManager
         RunScWithOutput($"stop \"{name}\"");
     }
 
+    private static Encoding GetOemEncoding()
+    {
+        try
+        {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            return Encoding.GetEncoding(CultureInfo.CurrentCulture.TextInfo.OEMCodePage);
+        }
+        catch { return Encoding.GetEncoding(866); }
+    }
+
     private static (int exitCode, string output) RunScWithOutput(string args)
     {
+        var encoding = GetOemEncoding();
         using var process = new Process();
         process.StartInfo = new ProcessStartInfo
         {
@@ -85,7 +98,9 @@ public class ServiceManager
             UseShellExecute = false,
             CreateNoWindow = true,
             RedirectStandardOutput = true,
-            RedirectStandardError = true
+            RedirectStandardError = true,
+            StandardOutputEncoding = encoding,
+            StandardErrorEncoding = encoding
         };
         process.Start();
         var stdout = process.StandardOutput.ReadToEnd();

@@ -13,7 +13,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Margin="0,0,0,20">
-            <TextBlock Text="Драйверы" FontSize="22" FontWeight="Bold" />
+            <TextBlock Text="Драйверы" FontSize="22" FontWeight="Bold" Foreground="#E8ECF2" />
             <TextBlock Text="Определение оборудования и загрузка актуальных драйверов" FontSize="13" Foreground="#9EA7B8" Margin="0,6,0,0" />
         </StackPanel>
 
@@ -30,7 +30,7 @@
                                         </Border>
                                         <TextBlock Text="{Binding Vendor}" FontSize="13" FontWeight="SemiBold" Foreground="#C8D0E0" />
                                     </StackPanel>
-                                    <TextBlock Text="{Binding DeviceName}" FontSize="14" FontWeight="SemiBold" Margin="0,6,0,0" />
+                                    <TextBlock Text="{Binding DeviceName}" FontSize="14" FontWeight="SemiBold" Margin="0,6,0,0" Foreground="#E8ECF2" />
                                     <TextBlock Text="{Binding Description}" FontSize="12" Foreground="#9EA7B8" Margin="0,4,0,0" />
                                     <TextBlock Text="{Binding CurrentVersion, StringFormat='Текущая версия: {0}'}" FontSize="11" Foreground="#7A8494" Margin="0,4,0,0"
                                                Visibility="{Binding CurrentVersion, Converter={StaticResource StringToVisibilityConverter}}" />

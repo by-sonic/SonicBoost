@@ -8,7 +8,7 @@
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="40,28">
         <StackPanel MaxWidth="920">
-            <TextBlock Text="Оптимизация сети" FontSize="22" FontWeight="Bold" />
+            <TextBlock Text="Оптимизация сети" FontSize="22" FontWeight="Bold" Foreground="#E8ECF2" />
             <TextBlock Text="Снижение пинга и настройка сети для игр" FontSize="13" Foreground="#9EA7B8" Margin="0,6,0,28" />
 
             <!-- Network Tweaks -->
@@ -18,7 +18,7 @@
                         <ui:CardControl Margin="0,0,0,10" Padding="20,16">
                             <ui:CardControl.Header>
                                 <StackPanel>
-                                    <TextBlock Text="{Binding Name}" FontSize="14" FontWeight="SemiBold" />
+                                    <TextBlock Text="{Binding Name}" FontSize="14" FontWeight="SemiBold" Foreground="#E8ECF2" />
                                     <TextBlock Text="{Binding Description}" FontSize="12" Foreground="#9EA7B8" TextWrapping="Wrap" Margin="0,6,0,0" />
                                 </StackPanel>
                             </ui:CardControl.Header>
@@ -36,12 +36,12 @@
             </ItemsControl>
 
             <!-- DNS Section -->
-            <TextBlock Text="Настройка DNS" FontSize="17" FontWeight="SemiBold" Margin="0,24,0,14" />
+            <TextBlock Text="Настройка DNS" FontSize="17" FontWeight="SemiBold" Margin="0,24,0,14" Foreground="#E8ECF2" />
 
             <ui:CardControl Margin="0,0,0,12" Padding="20,16">
                 <ui:CardControl.Header>
                     <StackPanel>
-                        <TextBlock Text="Быстрый DNS" FontSize="14" FontWeight="SemiBold" />
+                        <TextBlock Text="Быстрый DNS" FontSize="14" FontWeight="SemiBold" Foreground="#E8ECF2" />
                         <TextBlock Text="Установка быстрого DNS для снижения задержки" FontSize="12" Foreground="#9EA7B8" Margin="0,2,0,0" />
                     </StackPanel>
                 </ui:CardControl.Header>

@@ -137,8 +137,20 @@ public class NetworkOptimizer
         RunNetsh($"interface tcp set global autotuninglevel={level}");
     }
 
+    private static System.Text.Encoding GetOemEncoding()
+    {
+        try
+        {
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+            return System.Text.Encoding.GetEncoding(
+                System.Globalization.CultureInfo.CurrentCulture.TextInfo.OEMCodePage);
+        }
+        catch { return System.Text.Encoding.GetEncoding(866); }
+    }
+
     private static (int exitCode, string output) RunNetsh(string args)
     {
+        var encoding = GetOemEncoding();
         using var process = new Process();
         process.StartInfo = new ProcessStartInfo
         {
@@ -147,7 +159,9 @@ public class NetworkOptimizer
             UseShellExecute = false,
             CreateNoWindow = true,
             RedirectStandardOutput = true,
-            RedirectStandardError = true
+            RedirectStandardError = true,
+            StandardOutputEncoding = encoding,
+            StandardErrorEncoding = encoding
         };
         process.Start();
         var stdout = process.StandardOutput.ReadToEnd();

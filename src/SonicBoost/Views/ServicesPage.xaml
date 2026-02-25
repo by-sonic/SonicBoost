@@ -15,7 +15,7 @@
 
         <DockPanel Margin="0,0,0,20">
             <StackPanel>
-                <TextBlock Text="Управление службами" FontSize="22" FontWeight="Bold" />
+                <TextBlock Text="Управление службами" FontSize="22" FontWeight="Bold" Foreground="#E8ECF2" />
                 <TextBlock Text="Отключение ненужных служб Windows для экономии ресурсов" FontSize="13" Foreground="#9EA7B8" Margin="0,6,0,0" />
             </StackPanel>
             <ui:Button Content="Отключить все безопасные" Appearance="Primary" HorizontalAlignment="Right" Command="{Binding DisableAllSafeCommand}" />
@@ -37,12 +37,12 @@
                             <ui:CardControl.Header>
                                 <StackPanel>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding DisplayName}" FontSize="14" FontWeight="SemiBold" />
+                                        <TextBlock Text="{Binding DisplayName}" FontSize="14" FontWeight="SemiBold" Foreground="#E8ECF2" />
                                         <Border Margin="10,0,0,0" Padding="8,4" CornerRadius="6" Background="#33FFA000">
-                                            <TextBlock Text="{Binding Category}" FontSize="11" />
+                                            <TextBlock Text="{Binding Category}" FontSize="11" Foreground="#E8ECF2" />
                                         </Border>
                                         <Border Margin="6,0,0,0" Padding="8,4" CornerRadius="6" Background="#3300C853">
-                                            <TextBlock Text="{Binding Status, Converter={StaticResource ServiceStatusToRussianConverter}}" FontSize="11" />
+                                            <TextBlock Text="{Binding Status, Converter={StaticResource ServiceStatusToRussianConverter}}" FontSize="11" Foreground="#E8ECF2" />
                                         </Border>
                                     </StackPanel>
                                     <TextBlock Text="{Binding Description}" FontSize="12" Foreground="#9EA7B8" TextWrapping="Wrap" Margin="0,6,0,0" />

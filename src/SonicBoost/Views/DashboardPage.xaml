@@ -42,7 +42,7 @@
             <ui:CardControl Margin="0,0,0,20" Padding="24,20">
                 <ui:CardControl.Header>
                     <StackPanel>
-                        <TextBlock Text="Оценка оптимизации" FontSize="16" FontWeight="SemiBold" />
+                        <TextBlock Text="Оценка оптимизации" FontSize="16" FontWeight="SemiBold" Foreground="#E8ECF2" />
                         <TextBlock Text="Насколько система настроена для игр" FontSize="12" Foreground="#9EA7B8" Margin="0,2,0,0" />
                     </StackPanel>
                 </ui:CardControl.Header>
@@ -53,12 +53,12 @@
             </ui:CardControl>
 
             <!-- System Info Cards -->
-            <TextBlock Text="Информация о системе" FontSize="19" FontWeight="SemiBold" Margin="0,10,0,14" />
+            <TextBlock Text="Информация о системе" FontSize="19" FontWeight="SemiBold" Margin="0,10,0,14" Foreground="#E8ECF2" />
 
             <ui:CardControl Margin="0,0,0,10" Padding="20,16">
                 <ui:CardControl.Header>
                     <StackPanel>
-                        <TextBlock Text="Процессор (CPU)" FontSize="14" FontWeight="SemiBold" />
+                        <TextBlock Text="Процессор (CPU)" FontSize="14" FontWeight="SemiBold" Foreground="#E8ECF2" />
                         <TextBlock Text="{Binding CpuName}" FontSize="12" Foreground="#B0B8C8" Margin="0,2,0,0" />
                     </StackPanel>
                 </ui:CardControl.Header>
@@ -68,7 +68,7 @@
             <ui:CardControl Margin="0,0,0,10" Padding="20,16">
                 <ui:CardControl.Header>
                     <StackPanel>
-                        <TextBlock Text="Видеокарта (GPU)" FontSize="14" FontWeight="SemiBold" />
+                        <TextBlock Text="Видеокарта (GPU)" FontSize="14" FontWeight="SemiBold" Foreground="#E8ECF2" />
                         <TextBlock Text="{Binding GpuName}" FontSize="12" Foreground="#B0B8C8" Margin="0,2,0,0" />
                     </StackPanel>
                 </ui:CardControl.Header>
@@ -78,7 +78,7 @@
             <ui:CardControl Margin="0,0,0,10" Padding="20,16">
                 <ui:CardControl.Header>
                     <StackPanel>
-                        <TextBlock Text="Память (RAM)" FontSize="14" FontWeight="SemiBold" />
+                        <TextBlock Text="Память (RAM)" FontSize="14" FontWeight="SemiBold" Foreground="#E8ECF2" />
                         <TextBlock Text="{Binding RamInfo}" FontSize="12" Foreground="#B0B8C8" Margin="0,2,0,0" />
                     </StackPanel>
                 </ui:CardControl.Header>
@@ -88,7 +88,7 @@
             <ui:CardControl Margin="0,0,0,10" Padding="20,16">
                 <ui:CardControl.Header>
                     <StackPanel>
-                        <TextBlock Text="Материнская плата" FontSize="14" FontWeight="SemiBold" />
+                        <TextBlock Text="Материнская плата" FontSize="14" FontWeight="SemiBold" Foreground="#E8ECF2" />
                         <TextBlock Text="{Binding Motherboard}" FontSize="12" Foreground="#B0B8C8" Margin="0,2,0,0" />
                     </StackPanel>
                 </ui:CardControl.Header>
@@ -98,7 +98,7 @@
             <ui:CardControl Margin="0,0,0,10" Padding="20,16">
                 <ui:CardControl.Header>
                     <StackPanel>
-                        <TextBlock Text="Операционная система" FontSize="14" FontWeight="SemiBold" />
+                        <TextBlock Text="Операционная система" FontSize="14" FontWeight="SemiBold" Foreground="#E8ECF2" />
                         <TextBlock Text="{Binding OsInfo}" FontSize="12" Foreground="#B0B8C8" Margin="0,2,0,0" />
                     </StackPanel>
                 </ui:CardControl.Header>
@@ -108,7 +108,7 @@
             <ui:CardControl Margin="0,0,0,10" Padding="20,16">
                 <ui:CardControl.Header>
                     <StackPanel>
-                        <TextBlock Text="Накопители" FontSize="14" FontWeight="SemiBold" />
+                        <TextBlock Text="Накопители" FontSize="14" FontWeight="SemiBold" Foreground="#E8ECF2" />
                         <TextBlock Text="{Binding StorageInfo}" FontSize="12" Foreground="#B0B8C8" TextWrapping="Wrap" Margin="0,2,0,0" />
                     </StackPanel>
                 </ui:CardControl.Header>

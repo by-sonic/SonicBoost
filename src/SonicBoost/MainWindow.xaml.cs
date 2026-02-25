@@ -10,48 +10,39 @@ namespace SonicBoost;
 
 public partial class MainWindow : FluentWindow
 {
-    private readonly Frame _contentFrame;
-
     public MainWindow()
     {
         InitializeComponent();
-        _contentFrame = new Frame { NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden };
         Loaded += MainWindow_Loaded;
     }
 
     private void MainWindow_Loaded(object sender, RoutedEventArgs e)
     {
-        NavigateTo(typeof(DashboardPage));
+        NavList.SelectedIndex = 0;
     }
 
-    private void RootNavigation_SelectionChanged(NavigationView sender, RoutedEventArgs args)
+    private void NavList_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (sender.SelectedItem is NavigationViewItem item && item.TargetPageType is not null)
+        if (NavList.SelectedItem is ListBoxItem item && item.Tag is string tag)
         {
-            NavigateTo(item.TargetPageType);
+            var page = CreatePage(tag);
+            if (page != null)
+                PageFrame.Navigate(page);
         }
     }
 
-    private void NavigateTo(Type pageType)
+    private static object? CreatePage(string tag) => tag switch
     {
-        object? page = pageType.Name switch
-        {
-            nameof(DashboardPage) => new DashboardPage(App.GetService<DashboardViewModel>()),
-            nameof(TweaksPage) => new TweaksPage(App.GetService<TweaksViewModel>()),
-            nameof(ServicesPage) => new ServicesPage(App.GetService<ServicesViewModel>()),
-            nameof(PrivacyPage) => new PrivacyPage(App.GetService<PrivacyViewModel>()),
-            nameof(DebloatPage) => new DebloatPage(App.GetService<DebloatViewModel>()),
-            nameof(NetworkPage) => new NetworkPage(App.GetService<NetworkViewModel>()),
-            nameof(DriversPage) => new DriversPage(App.GetService<DriversViewModel>()),
-            nameof(PowerPage) => new PowerPage(App.GetService<PowerViewModel>()),
-            _ => null
-        };
-
-        if (page is Page p)
-        {
-            RootNavigation.NavigateWithHierarchy(pageType);
-        }
-    }
+        "Dashboard" => new DashboardPage(App.GetService<DashboardViewModel>()),
+        "Tweaks" => new TweaksPage(App.GetService<TweaksViewModel>()),
+        "Services" => new ServicesPage(App.GetService<ServicesViewModel>()),
+        "Privacy" => new PrivacyPage(App.GetService<PrivacyViewModel>()),
+        "Debloat" => new DebloatPage(App.GetService<DebloatViewModel>()),
+        "Network" => new NetworkPage(App.GetService<NetworkViewModel>()),
+        "Drivers" => new DriversPage(App.GetService<DriversViewModel>()),
+        "Power" => new PowerPage(App.GetService<PowerViewModel>()),
+        _ => null
+    };
 
     private void SonicVpnCard_Click(object sender, MouseButtonEventArgs e)
     {

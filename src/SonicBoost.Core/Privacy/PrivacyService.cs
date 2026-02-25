@@ -20,9 +20,9 @@ public class PrivacyService
         new()
         {
             Id = "disable_telemetry",
-            Name = "Disable Telemetry",
-            Description = "Sets telemetry collection level to zero (Security only)",
-            Category = "Telemetry",
+            Name = "Отключить телеметрию",
+            Description = "Устанавливает уровень сбора телеметрии на минимум (только безопасность)",
+            Category = "Телеметрия",
             Risk = TweakRisk.Safe,
             RegistryPath = @"HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection",
             RegistryKey = "AllowTelemetry",
@@ -33,9 +33,9 @@ public class PrivacyService
         new()
         {
             Id = "disable_advertising_id",
-            Name = "Disable Advertising ID",
-            Description = "Prevents apps from using your advertising ID for targeted ads",
-            Category = "Privacy",
+            Name = "Отключить рекламный идентификатор",
+            Description = "Запрещает приложениям использовать рекламный ID для таргета",
+            Category = "Конфиденциальность",
             Risk = TweakRisk.Safe,
             RegistryPath = @"HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo",
             RegistryKey = "Enabled",
@@ -46,9 +46,9 @@ public class PrivacyService
         new()
         {
             Id = "disable_activity_history",
-            Name = "Disable Activity History",
-            Description = "Prevents Windows from collecting activity history",
-            Category = "Privacy",
+            Name = "Отключить журнал активности",
+            Description = "Запрещает Windows собирать историю активности",
+            Category = "Конфиденциальность",
             Risk = TweakRisk.Safe,
             RegistryPath = @"HKLM\SOFTWARE\Policies\Microsoft\Windows\System",
             RegistryKey = "EnableActivityFeed",
@@ -59,9 +59,9 @@ public class PrivacyService
         new()
         {
             Id = "disable_activity_upload",
-            Name = "Disable Activity History Upload",
-            Description = "Prevents uploading activity history to Microsoft",
-            Category = "Privacy",
+            Name = "Отключить отправку журнала активности",
+            Description = "Запрещает отправку истории активности в Microsoft",
+            Category = "Конфиденциальность",
             Risk = TweakRisk.Safe,
             RegistryPath = @"HKLM\SOFTWARE\Policies\Microsoft\Windows\System",
             RegistryKey = "UploadUserActivities",
@@ -72,9 +72,9 @@ public class PrivacyService
         new()
         {
             Id = "disable_feedback",
-            Name = "Disable Feedback Notifications",
-            Description = "Prevents Windows from asking for feedback",
-            Category = "Privacy",
+            Name = "Отключить запросы отзывов",
+            Description = "Запрещает Windows запрашивать отзывы",
+            Category = "Конфиденциальность",
             Risk = TweakRisk.Safe,
             RegistryPath = @"HKCU\SOFTWARE\Microsoft\Siuf\Rules",
             RegistryKey = "NumberOfSIUFInPeriod",
@@ -85,9 +85,9 @@ public class PrivacyService
         new()
         {
             Id = "disable_location_tracking",
-            Name = "Disable Location Tracking",
-            Description = "Disables the system-wide location service",
-            Category = "Privacy",
+            Name = "Отключить отслеживание местоположения",
+            Description = "Отключает системную службу геолокации",
+            Category = "Конфиденциальность",
             Risk = TweakRisk.Safe,
             RegistryPath = @"HKLM\SOFTWARE\Policies\Microsoft\Windows\LocationAndSensors",
             RegistryKey = "DisableLocation",
@@ -98,9 +98,9 @@ public class PrivacyService
         new()
         {
             Id = "disable_app_diagnostics",
-            Name = "Disable App Diagnostics",
-            Description = "Prevents apps from accessing diagnostic data",
-            Category = "Privacy",
+            Name = "Отключить диагностику приложений",
+            Description = "Запрещает приложениям доступ к диагностическим данным",
+            Category = "Конфиденциальность",
             Risk = TweakRisk.Safe,
             RegistryPath = @"HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\DeviceAccess\Global\{2297E4E2-5DBE-466D-A12B-0F8286F0D9CA}",
             RegistryKey = "Value",
@@ -111,9 +111,9 @@ public class PrivacyService
         new()
         {
             Id = "disable_copilot",
-            Name = "Disable Windows Copilot",
-            Description = "Disables Windows Copilot AI assistant (Win11 23H2+)",
-            Category = "AI",
+            Name = "Отключить Windows Copilot",
+            Description = "Отключает помощника Copilot (Win11 23H2+)",
+            Category = "ИИ",
             Risk = TweakRisk.Safe,
             RegistryPath = @"HKCU\Software\Policies\Microsoft\Windows\WindowsCopilot",
             RegistryKey = "TurnOffWindowsCopilot",
@@ -124,9 +124,9 @@ public class PrivacyService
         new()
         {
             Id = "disable_recall",
-            Name = "Disable Windows Recall",
-            Description = "Disables Windows Recall AI screenshot feature",
-            Category = "AI",
+            Name = "Отключить Windows Recall",
+            Description = "Отключает функцию снимков экрана Recall",
+            Category = "ИИ",
             Risk = TweakRisk.Safe,
             RegistryPath = @"HKCU\Software\Policies\Microsoft\Windows\WindowsAI",
             RegistryKey = "DisableAIDataAnalysis",

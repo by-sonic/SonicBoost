@@ -11,6 +11,7 @@ public partial class TweaksViewModel : ObservableObject
     private readonly TweakEngine _engine;
 
     [ObservableProperty] private bool _isLoading;
+    [ObservableProperty] private string _statusMessage = "";
 
     public ObservableCollection<TweakItem> Tweaks { get; } = [];
 
@@ -23,6 +24,7 @@ public partial class TweaksViewModel : ObservableObject
     private async Task LoadTweaksAsync()
     {
         IsLoading = true;
+        StatusMessage = "Сканирование текущих настроек...";
         Tweaks.Clear();
 
         await Task.Run(() =>
@@ -39,6 +41,8 @@ public partial class TweaksViewModel : ObservableObject
             });
         });
 
+        var applied = Tweaks.Count(t => t.IsEnabled);
+        StatusMessage = $"Загружено {Tweaks.Count} твиков, из них применено: {applied}";
         IsLoading = false;
     }
 
@@ -46,15 +50,26 @@ public partial class TweaksViewModel : ObservableObject
     private async Task ToggleTweakAsync(TweakItem tweak)
     {
         tweak.IsApplying = true;
-        await Task.Run(() =>
+        var wasEnabled = tweak.IsEnabled;
+        try
         {
-            if (tweak.IsEnabled)
-                _engine.RevertTweak(tweak);
-            else
-                _engine.ApplyTweak(tweak);
+            await Task.Run(() =>
+            {
+                if (tweak.IsEnabled)
+                    _engine.RevertTweak(tweak);
+                else
+                    _engine.ApplyTweak(tweak);
 
-            tweak.IsEnabled = !tweak.IsEnabled;
-        });
+                tweak.IsEnabled = !tweak.IsEnabled;
+            });
+            StatusMessage = tweak.IsEnabled
+                ? $"Применено: {tweak.Name}"
+                : $"Отменено: {tweak.Name}";
+        }
+        catch (Exception ex)
+        {
+            StatusMessage = $"Ошибка: {tweak.Name} — {ex.Message}";
+        }
         tweak.IsApplying = false;
     }
 
@@ -62,14 +77,20 @@ public partial class TweaksViewModel : ObservableObject
     private async Task ApplyAllAsync()
     {
         IsLoading = true;
+        var toApply = Tweaks.Where(t => !t.IsEnabled).ToList();
+        int count = 0;
         await Task.Run(() =>
         {
-            foreach (var tweak in Tweaks.Where(t => !t.IsEnabled))
+            foreach (var tweak in toApply)
             {
                 _engine.ApplyTweak(tweak);
                 tweak.IsEnabled = true;
+                count++;
             }
         });
+        StatusMessage = count > 0
+            ? $"Применено твиков: {count}. Готово!"
+            : "Все твики уже применены";
         IsLoading = false;
     }
 }

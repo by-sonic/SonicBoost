@@ -33,6 +33,7 @@ public partial class NetworkViewModel : ObservableObject
     private async Task LoadTweaksAsync()
     {
         IsLoading = true;
+        StatusMessage = "Сканирование сетевых настроек...";
         Tweaks.Clear();
 
         await Task.Run(() =>
@@ -45,6 +46,8 @@ public partial class NetworkViewModel : ObservableObject
             });
         });
 
+        var applied = Tweaks.Count(t => t.IsEnabled);
+        StatusMessage = $"Сетевых твиков: {Tweaks.Count}, применено: {applied}";
         IsLoading = false;
     }
 
@@ -52,12 +55,22 @@ public partial class NetworkViewModel : ObservableObject
     private async Task ToggleTweakAsync(TweakItem tweak)
     {
         tweak.IsApplying = true;
-        await Task.Run(() =>
+        try
         {
-            if (tweak.IsEnabled) _net.RevertTweak(tweak);
-            else _net.ApplyTweak(tweak);
-            tweak.IsEnabled = !tweak.IsEnabled;
-        });
+            await Task.Run(() =>
+            {
+                if (tweak.IsEnabled) _net.RevertTweak(tweak);
+                else _net.ApplyTweak(tweak);
+                tweak.IsEnabled = !tweak.IsEnabled;
+            });
+            StatusMessage = tweak.IsEnabled
+                ? $"Применено: {tweak.Name}"
+                : $"Отменено: {tweak.Name}";
+        }
+        catch (Exception ex)
+        {
+            StatusMessage = $"Ошибка: {tweak.Name} — {ex.Message}";
+        }
         tweak.IsApplying = false;
     }
 
@@ -68,7 +81,7 @@ public partial class NetworkViewModel : ObservableObject
         if (preset == null) return;
 
         await Task.Run(() => _net.SetDns(preset.Primary, preset.Secondary));
-        StatusMessage = $"DNS set to {preset.Name} ({preset.Primary})";
+        StatusMessage = $"DNS установлен: {preset.Name} ({preset.Primary})";
     }
 }
 

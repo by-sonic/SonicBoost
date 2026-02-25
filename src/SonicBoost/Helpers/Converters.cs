@@ -51,3 +51,78 @@ public class StringToVisibilityConverter : IValueConverter
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotSupportedException();
 }
+
+public class RiskToRussianConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return value is TweakRisk risk ? risk switch
+        {
+            TweakRisk.Safe => "Безопасно",
+            TweakRisk.Moderate => "Умеренно",
+            TweakRisk.Advanced => "Продвинуто",
+            _ => ""
+        } : "";
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotSupportedException();
+}
+
+public class ServiceStatusToRussianConverter : IValueConverter
+{
+    private static string ToRussian(string? s)
+    {
+        return s switch
+        {
+            "Running" => "Работает",
+            "Stopped" => "Остановлена",
+            "Automatic" => "Автоматически",
+            "Manual" => "Вручную",
+            "Disabled" => "Отключено",
+            _ => s ?? ""
+        };
+    }
+
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => ToRussian(value?.ToString());
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotSupportedException();
+}
+
+public class BoolToStatusTextConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return value is true ? "✓ Включено" : "✗ Выключено";
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotSupportedException();
+}
+
+public class BoolToStatusBrushConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return value is true 
+            ? new SolidColorBrush(Color.FromArgb(0x33, 0x00, 0xE6, 0x76)) 
+            : new SolidColorBrush(Color.FromArgb(0x33, 0xFF, 0x55, 0x55));
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotSupportedException();
+}
+
+public class InverseBoolToStatusTextConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return value is true ? "✗ Отключена" : "✓ Работает";
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotSupportedException();
+}
+
+public class InverseBoolToStatusBrushConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return value is true 
+            ? new SolidColorBrush(Color.FromArgb(0x33, 0xFF, 0x55, 0x55)) 
+            : new SolidColorBrush(Color.FromArgb(0x33, 0x00, 0xE6, 0x76));
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotSupportedException();
+}

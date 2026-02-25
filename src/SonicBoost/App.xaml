@@ -16,8 +16,14 @@
 
             <helpers:RiskToBrushConverter x:Key="RiskToBrushConverter" />
             <helpers:RiskToVisibilityConverter x:Key="RiskToVisibilityConverter" />
+            <helpers:RiskToRussianConverter x:Key="RiskToRussianConverter" />
+            <helpers:ServiceStatusToRussianConverter x:Key="ServiceStatusToRussianConverter" />
             <helpers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <helpers:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
+            <helpers:BoolToStatusTextConverter x:Key="BoolToStatusTextConverter" />
+            <helpers:BoolToStatusBrushConverter x:Key="BoolToStatusBrushConverter" />
+            <helpers:InverseBoolToStatusTextConverter x:Key="InverseBoolToStatusTextConverter" />
+            <helpers:InverseBoolToStatusBrushConverter x:Key="InverseBoolToStatusBrushConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

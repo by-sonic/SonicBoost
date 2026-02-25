@@ -25,12 +25,12 @@ public partial class DebloatViewModel : ObservableObject
     {
         IsLoading = true;
         Apps.Clear();
-        StatusMessage = "Scanning installed apps...";
+        StatusMessage = "Сканирование установленных приложений...";
 
         var items = await Task.Run(() => _debloat.GetInstalledBloatware());
         foreach (var item in items) Apps.Add(item);
 
-        StatusMessage = $"Found {items.Count} removable apps";
+        StatusMessage = $"Найдено приложений для удаления: {items.Count}";
         IsLoading = false;
     }
 
@@ -40,7 +40,7 @@ public partial class DebloatViewModel : ObservableObject
         var selected = Apps.Where(a => a.IsSelected).ToList();
         if (selected.Count == 0)
         {
-            StatusMessage = "Select apps to remove first";
+            StatusMessage = "Сначала выберите приложения для удаления";
             return;
         }
 
@@ -48,7 +48,7 @@ public partial class DebloatViewModel : ObservableObject
         int removed = 0;
         foreach (var app in selected)
         {
-            StatusMessage = $"Removing {app.DisplayName}...";
+            StatusMessage = $"Удаление {app.DisplayName}...";
             var success = await Task.Run(() => _debloat.RemoveApp(app.PackageName));
             if (success)
             {
@@ -56,7 +56,7 @@ public partial class DebloatViewModel : ObservableObject
                 System.Windows.Application.Current.Dispatcher.Invoke(() => Apps.Remove(app));
             }
         }
-        StatusMessage = $"Removed {removed} apps";
+        StatusMessage = $"Удалено приложений: {removed}";
         IsLoading = false;
     }
 
@@ -64,11 +64,11 @@ public partial class DebloatViewModel : ObservableObject
     private async Task CleanTempFilesAsync()
     {
         IsLoading = true;
-        StatusMessage = "Cleaning temporary files...";
+        StatusMessage = "Очистка временных файлов...";
 
         var freed = await Task.Run(() => _debloat.CleanTempFiles());
         var freedMb = freed / 1024 / 1024;
-        TempCleanResult = $"Freed {freedMb} MB of disk space";
+        TempCleanResult = $"Освобождено места на диске: {freedMb} МБ";
         StatusMessage = TempCleanResult;
         IsLoading = false;
     }

@@ -1,124 +1,83 @@
 <div align="center">
 
-# ⚡ SonicBoost
+# SonicBoost
 
-### Open-Source Windows Gaming Optimizer
+### Оптимизация Windows для игр в один клик
 
-[![Build](https://github.com/user/SonicBoost/actions/workflows/build-release.yml/badge.svg)](https://github.com/user/SonicBoost/actions)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![.NET 8](https://img.shields.io/badge/.NET-8.0-purple.svg)](https://dotnet.microsoft.com/)
-[![Windows 10/11](https://img.shields.io/badge/Windows-10%20%7C%2011-0078D6.svg)](https://www.microsoft.com/windows)
+[![Build](https://github.com/by-sonic/SonicBoost/actions/workflows/build-release.yml/badge.svg)](https://github.com/by-sonic/SonicBoost/actions)
+[![Release](https://img.shields.io/github/v/release/by-sonic/SonicBoost?color=1e90ff&label=Скачать)](https://github.com/by-sonic/SonicBoost/releases/latest)
+[![License](https://img.shields.io/github/license/by-sonic/SonicBoost?color=00d4aa)](LICENSE)
+[![Stars](https://img.shields.io/github/stars/by-sonic/SonicBoost?style=social)](https://github.com/by-sonic/SonicBoost)
 
-**SonicBoost** is a free, open-source tool that optimizes Windows 10/11 for maximum gaming performance. One-click system tweaks, driver detection, bloatware removal, and privacy protection — all in a modern Fluent Design interface.
+**SonicBoost** — бесплатная утилита с открытым исходным кодом для тонкой настройки Windows 10/11 под игры.  
+28+ твиков реестра, управление службами, очистка телеметрии, оптимизация сети — всё с красивым UI и обратной связью.
 
-*Fast as Sonic. Powerful as a boost.*
+[Скачать .exe](https://github.com/by-sonic/SonicBoost/releases/latest) · [Статья на Хабре](#) · [SonicVPN](https://t.me/bysonicvpn_bot)
 
 </div>
 
 ---
 
-## Features
+## Возможности
 
-### Gaming Tweaks
-- Disable Game Bar, Game DVR, and fullscreen optimizations
-- Enable Hardware-Accelerated GPU Scheduling
-- Set high GPU/CPU priority for games
-- Disable mouse acceleration, animations, transparency
-- High timer resolution for smoother frame pacing
+| Модуль | Описание |
+|--------|----------|
+| **Игровые твики** | 28 оптимизаций реестра: Game Bar, Game DVR, HAGS, приоритеты GPU/CPU, таймеры, фоновые приложения |
+| **Управление службами** | Отключение 18 ненужных служб (телеметрия, Xbox, факс, геолокация) с цветовыми статусами |
+| **Конфиденциальность** | Блокировка телеметрии Microsoft, рекламного ID, Copilot, Recall, журнала активности |
+| **Очистка системы** | Удаление 25+ предустановленных приложений (Cortana, Teams, Candy Crush...) + очистка temp |
+| **Оптимизация сети** | Отключение Nagle, TCP-оптимизация, настройка DNS (Cloudflare/Google/Quad9) |
+| **Драйверы** | Определение оборудования и ссылки на последние драйверы |
+| **Электропитание** | Ultimate Performance, отключение гибернации, управление планами питания |
 
-### Service Manager
-- Safely disable 18+ unnecessary Windows services
-- Categorized by risk level (Safe / Caution)
-- One-click "Disable All Safe" button
+## Скриншоты
 
-### Privacy & Telemetry
-- Disable Windows telemetry, advertising ID, activity history
-- Block telemetry endpoints via hosts file
-- Disable Cortana, Copilot, and Windows Recall
-- 9 privacy tweaks with individual toggles
+> Тёмный интерфейс на базе WPF UI (Fluent Design) с Mica-эффектом
 
-### Debloat
-- Remove 26+ pre-installed UWP apps (Candy Crush, Clipchamp, etc.)
-- Clean temporary files and Windows Update cache
-- Free up disk space instantly
+## Быстрый старт
 
-### Network Optimization
-- Disable Nagle's Algorithm for lower ping
-- Optimize TCP ACK frequency and disable network throttling
-- Quick DNS switching (Cloudflare, Google, Quad9, OpenDNS)
+### Скачать готовый EXE
 
-### Driver Manager
-- Auto-detect GPU, chipset, network, and audio devices via WMI
-- Direct links to official driver download pages (NVIDIA, AMD, Intel, etc.)
-- Shows current driver versions
+1. Перейди в [Releases](https://github.com/by-sonic/SonicBoost/releases/latest)
+2. Скачай `SonicBoost.exe`
+3. Запусти **от имени администратора**
+4. Выбирай твики и нажимай — статус обновляется моментально
 
-### Power Plan
-- Activate Ultimate Performance or High Performance power plan
-- Disable hibernation to free disk space
-- View and switch between all available power plans
-
-### System Dashboard
-- Real-time hardware detection (CPU, GPU, RAM, motherboard, storage)
-- Optimization score showing current system state
-- Beautiful dark theme with Fluent Design
-
-## Installation
-
-### Download (Recommended)
-
-1. Go to [**Releases**](https://github.com/user/SonicBoost/releases)
-2. Download `SonicBoost.exe`
-3. Run as Administrator
-
-No .NET installation required — the app is self-contained.
-
-### Build from Source
+### Собрать из исходников
 
 ```bash
-git clone https://github.com/user/SonicBoost.git
+git clone https://github.com/by-sonic/SonicBoost.git
 cd SonicBoost
-dotnet build SonicBoost.sln
+dotnet publish src/SonicBoost/SonicBoost.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o publish
 ```
 
-To publish a single-file .exe:
-```bash
-dotnet publish src/SonicBoost/SonicBoost.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true
-```
+Готовый файл: `publish/SonicBoost.exe`
 
-## Requirements
+## Технологии
 
-- Windows 10 (1903+) or Windows 11
-- Administrator privileges (required for registry and service modifications)
+- **.NET 8** — WPF, self-contained single-file
+- **WPF UI (Fluent)** — Mica, тёмная тема, Fluent Design
+- **CommunityToolkit.Mvvm** — MVVM, source generators
+- **Реестр Windows** — прямое чтение/запись через `Microsoft.Win32`
 
-## Tech Stack
+## Безопасность
 
-- **C# / .NET 8** — native Windows performance
-- **WPF + [WPF UI](https://github.com/lepoco/wpfui)** — Fluent Design with dark theme
-- **CommunityToolkit.Mvvm** — MVVM pattern with source generators
-- **System.Management** — WMI hardware detection
+- Все изменения реестра обратимы (бэкап перед каждым твиком)
+- Цветовая маркировка рисков: **Безопасно** / **Умеренно** / **Продвинуто**
+- Открытый исходный код — проверяй каждую строку
 
-## Safety
+## SonicVPN
 
-SonicBoost creates automatic backups before applying any changes. You can restore your original settings at any time.
+Защита соединения + низкий пинг для игр.  
+Подключение через Telegram-бота: [@bysonicvpn_bot](https://t.me/bysonicvpn_bot)
 
-> **Warning**: Always create a system restore point before making system-wide changes. While SonicBoost is designed to be safe, registry and service modifications carry inherent risks.
+## Лицензия
 
-## Powered by SonicVPN
-
-Protect your gaming connection with [**SonicVPN**](https://sonicvpn.com) — zero-lag VPN optimized for gamers.
-
-## Contributing
-
-Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-## License
-
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+MIT — используй свободно. Звёздочка на репозитории приветствуется.
 
 ---
 
 <div align="center">
-
-**Made with speed by the Sonic community**
-
+  <b>Сделано с любовью к играм</b><br>
+  <a href="https://t.me/bysonicvpn_bot">SonicVPN</a> · <a href="https://github.com/by-sonic/SonicBoost">GitHub</a>
 </div>

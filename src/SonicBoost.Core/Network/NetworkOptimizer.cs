@@ -22,9 +22,9 @@ public class NetworkOptimizer
         new()
         {
             Id = "disable_nagle",
-            Name = "Disable Nagle's Algorithm",
-            Description = "Reduces network latency by sending packets immediately instead of buffering",
-            Category = "Latency",
+            Name = "Отключить алгоритм Нейгла",
+            Description = "Снижает задержку за счёт немедленной отправки пакетов",
+            Category = "Задержка",
             Risk = TweakRisk.Safe,
             RegistryPath = @"HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters",
             RegistryKey = "TcpNoDelay",
@@ -35,9 +35,9 @@ public class NetworkOptimizer
         new()
         {
             Id = "disable_tcp_timestamps",
-            Name = "Disable TCP Timestamps",
-            Description = "Disables TCP timestamps to reduce packet overhead",
-            Category = "Latency",
+            Name = "Отключить TCP-метки времени",
+            Description = "Отключает метки времени TCP для уменьшения накладных расходов",
+            Category = "Задержка",
             Risk = TweakRisk.Moderate,
             RegistryPath = @"HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters",
             RegistryKey = "Tcp1323Opts",
@@ -48,9 +48,9 @@ public class NetworkOptimizer
         new()
         {
             Id = "network_throttling_off",
-            Name = "Disable Network Throttling",
-            Description = "Removes the 10-packet throttle limit on non-multimedia traffic",
-            Category = "Throughput",
+            Name = "Отключить сетевой троттлинг",
+            Description = "Снимает лимит в 10 пакетов для немультимедийного трафика",
+            Category = "Пропускная способность",
             Risk = TweakRisk.Safe,
             RegistryPath = @"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile",
             RegistryKey = "NetworkThrottlingIndex",
@@ -61,9 +61,9 @@ public class NetworkOptimizer
         new()
         {
             Id = "disable_large_send_offload",
-            Name = "Optimize TCP ACK Frequency",
-            Description = "Increases TCP ACK frequency for lower latency in gaming",
-            Category = "Latency",
+            Name = "Оптимизировать частоту TCP ACK",
+            Description = "Увеличивает частоту подтверждений TCP для снижения задержки в играх",
+            Category = "Задержка",
             Risk = TweakRisk.Moderate,
             RegistryPath = @"HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters",
             RegistryKey = "TcpAckFrequency",

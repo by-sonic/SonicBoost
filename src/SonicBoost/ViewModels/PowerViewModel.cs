@@ -10,7 +10,7 @@ public partial class PowerViewModel : ObservableObject
     private readonly PowerPlanService _power;
 
     [ObservableProperty] private bool _isLoading;
-    [ObservableProperty] private string _currentPlan = "Detecting...";
+    [ObservableProperty] private string _currentPlan = "Определение...";
     [ObservableProperty] private string _statusMessage = "";
 
     public ObservableCollection<PowerPlanInfo> Plans { get; } = [];
@@ -46,8 +46,8 @@ public partial class PowerViewModel : ObservableObject
     {
         IsLoading = true;
         await Task.Run(() => _power.EnableUltimatePerformance());
-        CurrentPlan = "Ultimate Performance";
-        StatusMessage = "Ultimate Performance plan activated";
+        CurrentPlan = "Максимальная производительность";
+        StatusMessage = "План «Максимальная производительность» активирован";
         IsLoading = false;
     }
 
@@ -55,15 +55,15 @@ public partial class PowerViewModel : ObservableObject
     private async Task SetHighPerformanceAsync()
     {
         await Task.Run(() => _power.SetHighPerformance());
-        CurrentPlan = "High Performance";
-        StatusMessage = "High Performance plan activated";
+        CurrentPlan = "Высокая производительность";
+        StatusMessage = "План «Высокая производительность» активирован";
     }
 
     [RelayCommand]
     private async Task DisableHibernationAsync()
     {
         await Task.Run(() => _power.DisableHibernation());
-        StatusMessage = "Hibernation disabled";
+        StatusMessage = "Гибернация отключена";
     }
 
     [RelayCommand]

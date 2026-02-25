@@ -46,6 +46,6 @@ public partial class MainWindow : FluentWindow
 
     private void SonicVpnCard_Click(object sender, MouseButtonEventArgs e)
     {
-        Process.Start(new ProcessStartInfo("https://sonicvpn.com") { UseShellExecute = true });
+        Process.Start(new ProcessStartInfo("https://t.me/bysonicvpn_bot") { UseShellExecute = true });
     }
 }

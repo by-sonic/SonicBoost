@@ -19,42 +19,51 @@
         </Grid.ColumnDefinitions>
 
         <!-- Sidebar -->
-        <Border Grid.Column="0" Background="#0A0A0A" Width="220">
+        <Border Grid.Column="0" Background="#111318" Width="240">
             <DockPanel>
                 <!-- Header -->
-                <StackPanel DockPanel.Dock="Top" Margin="16,16,16,8">
+                <StackPanel DockPanel.Dock="Top" Margin="20,20,20,12">
                     <TextBlock
                         Text="SonicBoost"
-                        FontSize="22"
+                        FontSize="24"
                         FontWeight="Bold"
                         Foreground="{StaticResource SonicAccentBrush}" />
                     <TextBlock
-                        Text="Windows Gaming Optimizer"
-                        FontSize="11"
-                        Opacity="0.6"
-                        Margin="0,2,0,0" />
+                        Text="Оптимизация Windows для игр"
+                        FontSize="12"
+                        Foreground="#8892A0"
+                        Margin="0,4,0,0" />
                 </StackPanel>
 
                 <!-- SonicVPN Card at bottom -->
                 <Border
                     DockPanel.Dock="Bottom"
-                    Background="#1A00D4AA"
-                    CornerRadius="8"
-                    Padding="12,10"
-                    Margin="12,8,12,12"
+                    CornerRadius="10"
+                    Padding="14,12"
+                    Margin="14,10,14,16"
                     Cursor="Hand"
                     MouseLeftButtonUp="SonicVpnCard_Click">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#1A1E90FF" Offset="0" />
+                            <GradientStop Color="#1A00D4AA" Offset="1" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="12" ShadowDepth="0" Opacity="0.2" Color="#1E90FF" />
+                    </Border.Effect>
                     <StackPanel>
                         <TextBlock
                             Text="SonicVPN"
                             FontWeight="SemiBold"
-                            FontSize="13"
+                            FontSize="14"
                             Foreground="{StaticResource SonicVpnBrush}" />
                         <TextBlock
-                            Text="Protect your connection"
-                            FontSize="10"
-                            Opacity="0.7"
-                            Margin="0,2,0,0" />
+                            Text="Защита и низкий пинг — в Telegram"
+                            FontSize="11"
+                            Foreground="#A0AABB"
+                            Margin="0,4,0,0"
+                            TextWrapping="Wrap" />
                     </StackPanel>
                 </Border>
 
@@ -64,30 +73,30 @@
                     Background="Transparent"
                     BorderThickness="0"
                     SelectionChanged="NavList_SelectionChanged"
-                    Margin="8,4,8,0">
+                    Margin="10,6,10,0">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
-                            <Setter Property="Padding" Value="12,10" />
-                            <Setter Property="Margin" Value="0,1" />
+                            <Setter Property="Padding" Value="14,12" />
+                            <Setter Property="Margin" Value="0,2" />
                             <Setter Property="Cursor" Value="Hand" />
-                            <Setter Property="Foreground" Value="#CCCCCC" />
+                            <Setter Property="Foreground" Value="#E0E4EA" />
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="ListBoxItem">
                                         <Border
                                             x:Name="Bd"
                                             Background="Transparent"
-                                            CornerRadius="6"
+                                            CornerRadius="8"
                                             Padding="{TemplateBinding Padding}">
                                             <ContentPresenter />
                                         </Border>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="Bd" Property="Background" Value="#1AFFFFFF" />
+                                                <Setter TargetName="Bd" Property="Background" Value="#18FFFFFF" />
                                             </Trigger>
                                             <Trigger Property="IsSelected" Value="True">
                                                 <Setter TargetName="Bd" Property="Background" Value="#2A1E90FF" />
-                                                <Setter Property="Foreground" Value="#1E90FF" />
+                                                <Setter Property="Foreground" Value="#4DA6FF" />
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
@@ -98,50 +107,50 @@
 
                     <ListBoxItem Tag="Dashboard">
                         <StackPanel Orientation="Horizontal">
-                            <ui:SymbolIcon Symbol="Home24" FontSize="16" Margin="0,0,10,0" />
-                            <TextBlock Text="Dashboard" VerticalAlignment="Center" />
+                            <ui:SymbolIcon Symbol="Home24" FontSize="18" Margin="0,0,12,0" />
+                            <TextBlock Text="Главная" VerticalAlignment="Center" FontSize="14" />
                         </StackPanel>
                     </ListBoxItem>
                     <ListBoxItem Tag="Tweaks">
                         <StackPanel Orientation="Horizontal">
-                            <ui:SymbolIcon Symbol="TopSpeed24" FontSize="16" Margin="0,0,10,0" />
-                            <TextBlock Text="Gaming Tweaks" VerticalAlignment="Center" />
+                            <ui:SymbolIcon Symbol="TopSpeed24" FontSize="18" Margin="0,0,12,0" />
+                            <TextBlock Text="Игровые твики" VerticalAlignment="Center" FontSize="14" />
                         </StackPanel>
                     </ListBoxItem>
                     <ListBoxItem Tag="Services">
                         <StackPanel Orientation="Horizontal">
-                            <ui:SymbolIcon Symbol="Settings24" FontSize="16" Margin="0,0,10,0" />
-                            <TextBlock Text="Services" VerticalAlignment="Center" />
+                            <ui:SymbolIcon Symbol="Settings24" FontSize="18" Margin="0,0,12,0" />
+                            <TextBlock Text="Службы" VerticalAlignment="Center" FontSize="14" />
                         </StackPanel>
                     </ListBoxItem>
                     <ListBoxItem Tag="Privacy">
                         <StackPanel Orientation="Horizontal">
-                            <ui:SymbolIcon Symbol="Shield24" FontSize="16" Margin="0,0,10,0" />
-                            <TextBlock Text="Privacy" VerticalAlignment="Center" />
+                            <ui:SymbolIcon Symbol="Shield24" FontSize="18" Margin="0,0,12,0" />
+                            <TextBlock Text="Конфиденциальность" VerticalAlignment="Center" FontSize="14" />
                         </StackPanel>
                     </ListBoxItem>
                     <ListBoxItem Tag="Debloat">
                         <StackPanel Orientation="Horizontal">
-                            <ui:SymbolIcon Symbol="Delete24" FontSize="16" Margin="0,0,10,0" />
-                            <TextBlock Text="Debloat" VerticalAlignment="Center" />
+                            <ui:SymbolIcon Symbol="Delete24" FontSize="18" Margin="0,0,12,0" />
+                            <TextBlock Text="Очистка" VerticalAlignment="Center" FontSize="14" />
                         </StackPanel>
                     </ListBoxItem>
                     <ListBoxItem Tag="Network">
                         <StackPanel Orientation="Horizontal">
-                            <ui:SymbolIcon Symbol="Wifi124" FontSize="16" Margin="0,0,10,0" />
-                            <TextBlock Text="Network" VerticalAlignment="Center" />
+                            <ui:SymbolIcon Symbol="Wifi124" FontSize="18" Margin="0,0,12,0" />
+                            <TextBlock Text="Сеть" VerticalAlignment="Center" FontSize="14" />
                         </StackPanel>
                     </ListBoxItem>
                     <ListBoxItem Tag="Drivers">
                         <StackPanel Orientation="Horizontal">
-                            <ui:SymbolIcon Symbol="DesktopMac24" FontSize="16" Margin="0,0,10,0" />
-                            <TextBlock Text="Drivers" VerticalAlignment="Center" />
+                            <ui:SymbolIcon Symbol="DesktopMac24" FontSize="18" Margin="0,0,12,0" />
+                            <TextBlock Text="Драйверы" VerticalAlignment="Center" FontSize="14" />
                         </StackPanel>
                     </ListBoxItem>
                     <ListBoxItem Tag="Power">
                         <StackPanel Orientation="Horizontal">
-                            <ui:SymbolIcon Symbol="Flash24" FontSize="16" Margin="0,0,10,0" />
-                            <TextBlock Text="Power Plan" VerticalAlignment="Center" />
+                            <ui:SymbolIcon Symbol="Flash24" FontSize="18" Margin="0,0,12,0" />
+                            <TextBlock Text="Электропитание" VerticalAlignment="Center" FontSize="14" />
                         </StackPanel>
                     </ListBoxItem>
                 </ListBox>

@@ -8,14 +8,14 @@ public partial class DashboardViewModel : ObservableObject
 {
     private readonly HardwareDetectionService _hw;
 
-    [ObservableProperty] private string _cpuName = "Detecting...";
+    [ObservableProperty] private string _cpuName = "Определение...";
     [ObservableProperty] private string _cpuDetails = "";
-    [ObservableProperty] private string _gpuName = "Detecting...";
+    [ObservableProperty] private string _gpuName = "Определение...";
     [ObservableProperty] private string _gpuDetails = "";
-    [ObservableProperty] private string _ramInfo = "Detecting...";
-    [ObservableProperty] private string _motherboard = "Detecting...";
-    [ObservableProperty] private string _osInfo = "Detecting...";
-    [ObservableProperty] private string _storageInfo = "Detecting...";
+    [ObservableProperty] private string _ramInfo = "Определение...";
+    [ObservableProperty] private string _motherboard = "Определение...";
+    [ObservableProperty] private string _osInfo = "Определение...";
+    [ObservableProperty] private string _storageInfo = "Определение...";
     [ObservableProperty] private int _optimizationScore;
     [ObservableProperty] private bool _isLoading = true;
 
@@ -33,14 +33,14 @@ public partial class DashboardViewModel : ObservableObject
             var info = _hw.GetSystemInfo();
 
             CpuName = info.Cpu.Name;
-            CpuDetails = $"{info.Cpu.Cores} Cores / {info.Cpu.Threads} Threads @ {info.Cpu.MaxClockSpeed} MHz";
+            CpuDetails = $"{info.Cpu.Cores} ядер / {info.Cpu.Threads} потоков @ {info.Cpu.MaxClockSpeed} МГц";
 
             GpuName = info.Gpu.Name;
-            GpuDetails = $"VRAM: {info.Gpu.RamFormatted} | Driver: {info.Gpu.DriverVersion}";
+            GpuDetails = $"VRAM: {info.Gpu.RamFormatted} | Драйвер: {info.Gpu.DriverVersion}";
 
-            RamInfo = $"{info.Ram.TotalFormatted} ({info.Ram.Modules} modules @ {info.Ram.Speed} MHz)";
+            RamInfo = $"{info.Ram.TotalFormatted} ({info.Ram.Modules} модулей @ {info.Ram.Speed} МГц)";
             Motherboard = $"{info.Motherboard.Manufacturer} {info.Motherboard.Product}";
-            OsInfo = $"{info.Os.Name} ({info.Os.Architecture}) Build {info.Os.BuildNumber}";
+            OsInfo = $"{info.Os.Name} ({info.Os.Architecture}), сборка {info.Os.BuildNumber}";
 
             if (info.Drives.Count > 0)
             {

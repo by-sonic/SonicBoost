@@ -11,7 +11,7 @@ public partial class PrivacyViewModel : ObservableObject
     private readonly PrivacyService _privacy;
 
     [ObservableProperty] private bool _isLoading;
-    [ObservableProperty] private string _hostsStatus = "Not applied";
+    [ObservableProperty] private string _hostsStatus = "Не применено";
 
     public ObservableCollection<TweakItem> Tweaks { get; } = [];
 
@@ -24,6 +24,7 @@ public partial class PrivacyViewModel : ObservableObject
     private async Task LoadTweaksAsync()
     {
         IsLoading = true;
+        HostsStatus = "Сканирование настроек...";
         Tweaks.Clear();
 
         await Task.Run(() =>
@@ -36,6 +37,8 @@ public partial class PrivacyViewModel : ObservableObject
             });
         });
 
+        var applied = Tweaks.Count(t => t.IsEnabled);
+        HostsStatus = $"Твиков конфиденциальности: {Tweaks.Count}, применено: {applied}";
         IsLoading = false;
     }
 
@@ -43,14 +46,24 @@ public partial class PrivacyViewModel : ObservableObject
     private async Task ToggleTweakAsync(TweakItem tweak)
     {
         tweak.IsApplying = true;
-        await Task.Run(() =>
+        try
         {
-            if (tweak.IsEnabled)
-                _privacy.RevertTweak(tweak);
-            else
-                _privacy.ApplyTweak(tweak);
-            tweak.IsEnabled = !tweak.IsEnabled;
-        });
+            await Task.Run(() =>
+            {
+                if (tweak.IsEnabled)
+                    _privacy.RevertTweak(tweak);
+                else
+                    _privacy.ApplyTweak(tweak);
+                tweak.IsEnabled = !tweak.IsEnabled;
+            });
+            HostsStatus = tweak.IsEnabled
+                ? $"Применено: {tweak.Name}"
+                : $"Отменено: {tweak.Name}";
+        }
+        catch (Exception ex)
+        {
+            HostsStatus = $"Ошибка: {tweak.Name} — {ex.Message}";
+        }
         tweak.IsApplying = false;
     }
 
@@ -58,23 +71,27 @@ public partial class PrivacyViewModel : ObservableObject
     private async Task BlockTelemetryHostsAsync()
     {
         await Task.Run(() => _privacy.BlockTelemetryHosts());
-        HostsStatus = "Telemetry hosts blocked";
+        HostsStatus = "Хосты телеметрии заблокированы";
     }
 
     [RelayCommand]
     private async Task ApplyAllAsync()
     {
         IsLoading = true;
+        int count = 0;
         await Task.Run(() =>
         {
             foreach (var t in Tweaks.Where(t => !t.IsEnabled))
             {
                 _privacy.ApplyTweak(t);
                 t.IsEnabled = true;
+                count++;
             }
             _privacy.BlockTelemetryHosts();
         });
-        HostsStatus = "Telemetry hosts blocked";
+        HostsStatus = count > 0
+            ? $"Применено: {count} настроек. Хосты телеметрии заблокированы"
+            : "Все настройки уже применены. Хосты заблокированы";
         IsLoading = false;
     }
 }

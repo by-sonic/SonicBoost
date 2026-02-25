@@ -28,6 +28,6 @@ public partial class NetworkPage : Page
 
     private static void OpenSonicVpn()
     {
-        Process.Start(new ProcessStartInfo("https://sonicvpn.com") { UseShellExecute = true });
+        Process.Start(new ProcessStartInfo("https://t.me/bysonicvpn_bot") { UseShellExecute = true });
     }
 }
